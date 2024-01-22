@@ -3,79 +3,240 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
+    <title>Scientific Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            background-color: #138f9b;
         }
 
         #calculator {
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
+            width: 500px;
+            margin: 100px auto;
+            background-color: whitesmoke;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        input {
-            width: 100%;
-            margin-bottom: 10px;
+        .display {
+            text-align: right;
+            height: 40px;
             padding: 10px;
-            font-size: 16px;
+            font-size: 1.5em;
+            border-bottom: 1px solid #ddd;
         }
 
-        button {
-            width: 23.5%;
-            padding: 10px;
-            font-size: 16px;
-            margin: 0.5%;
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .buttons-container2 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .button {
+            padding: 15px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #e49c4b;
         }
     </style>
 </head>
 
 <body>
     <div id="calculator">
-        <input type="text" id="display" readonly>
-        <button onclick="clearDisplay()">C</button>
-        <button onclick="appendToDisplay('/')">/</button>
-        <button onclick="appendToDisplay('*')">*</button>
-        <button onclick="appendToDisplay('7')">1</button>
-        <button onclick="appendToDisplay('8')">2</button>
-        <button onclick="appendToDisplay('9')">3</button>
-        <button onclick="appendToDisplay('-')">4</button>
-        <button onclick="appendToDisplay('4')">5</button>
-        <button onclick="appendToDisplay('5')">6</button>
-        <button onclick="appendToDisplay('6')">7</button>
-        <button onclick="appendToDisplay('+')">8</button>
-        <button onclick="appendToDisplay('1')">9</button>
-        <button onclick="appendToDisplay('2')">0</button>
-        <button onclick="appendToDisplay('3')">-</button>
-        <button onclick="appendToDisplay('0')">+</button>
-        <button onclick="appendToDisplay('.')">.</button>
-        <button onclick="calculate()">=</button>
+        <div class="display" id="display">0</div>
+        <div class="buttons-container buttons1">
+            <div class="button" onclick="clearDisplay()">MC</div>
+            <div class="button" onclick="memoryRecall()">MR</div>
+            <div class="button" onclick="memoryAdd()">M+</div>
+            <div class="button" onclick="memorySubtract()">M-</div>
+            <div class="button" onclick="memoryStore()">MS</div>
+            <div class="button" onclick="memoryMultiply()">M*</div>
+        </div>
+        <div class="buttons-container2 buttons2">
+            <div class="button" onclick="handlePower()">2<sup>nd</sup></div>
+            <div class="button" onclick="appendCharacter('Math.PI')">π</div>
+            <div class="button" onclick="appendCharacter('Math.E')">e</div>
+            <div class="button" onclick="clearDisplay()">C</div>
+            <div class="button" onclick="deleteLast()">←</div>
+            <div class="button" onclick="handlePower()">X<sup>2</sup></div>
+            <div class="button" onclick="calculateInverse()">1/x</div>
+            <div class="button" onclick="calculateAbsolute()">|x|</div>
+            <div class="button" onclick="appendCharacter('Math.exp')">exp</div>
+            <div class="button" onclick="appendCharacter('%')">mod</div>
+            <div class="button" onclick="appendCharacter('Math.sqrt')">√</div>
+            <div class="button" onclick="appendCharacter('(')">(</div>
+            <div class="button" onclick="appendCharacter(')')">)</div>
+            <div class="button" onclick="calculateFactorial()">n!</div>
+            <div class="button" onclick="appendCharacter('/')">÷</div>
+            <div class="button" onclick="appendCharacter('**')">x<sup>y</sup></div>
+            <div class="button" onclick="appendCharacter('7')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                7</div>
+            <div class="button" onclick="appendCharacter('8')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                8</div>
+            <div class="button" onclick="appendCharacter('9')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                9</div>
+            <div class="button" onclick="appendCharacter('*')">X</div>
+            <div class="button" onclick="appendCharacter('10**')">10<sup>x</sup></div>
+            <div class="button" onclick="appendCharacter('4')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                4</div>
+            <div class="button" onclick="appendCharacter('5')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                5</div>
+            <div class="button" onclick="appendCharacter('6')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                6</div>
+            <div class="button" onclick="appendCharacter('-')">-</div>
+            <div class="button" onclick="appendCharacter('Math.log10')">log</div>
+            <div class="button" onclick="appendCharacter('1')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                1</div>
+            <div class="button" onclick="appendCharacter('2')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                2</div>
+            <div class="button" onclick="appendCharacter('3')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                3</div>
+            <div class="button" onclick="appendCharacter('+')">+</div>
+            <div class="button" onclick="appendCharacter('Math.log')">ln</div>
+            <div class="button" onclick="appendCharacter('±')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                ±</div>
+            <div class="button" onclick="appendCharacter('0')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                0</div>
+            <div class="button" onclick="appendCharacter('.')"
+                style="background-color: rgb(147, 147, 147); color: white;">
+                .</div>
+            <div class="button" onclick="calculateResult()">=</div>
+        </div>
     </div>
 
     <script>
-        function appendToDisplay(value) {
-            document.getElementById('display').value += value;
+        let currentInput = '';
+
+        function updateDisplay() {
+            document.getElementById('display').innerText = currentInput;
+        }
+
+        function appendCharacter(char) {
+            currentInput += char;
+            updateDisplay();
         }
 
         function clearDisplay() {
-            document.getElementById('display').value = '';
+            currentInput = '';
+            updateDisplay();
         }
 
-        function calculate() {
+        function deleteLast() {
+            currentInput = currentInput.slice(0, -1);
+            updateDisplay();
+        }
+
+        function handlePower() {
+            appendCharacter('**');
+        }
+
+        function calculateInverse() {
             try {
-                document.getElementById('display').value = eval(document.getElementById('display').value);
+                currentInput = eval(`1 / (${currentInput})`).toString();
+                updateDisplay();
             } catch (error) {
-                document.getElementById('display').value = 'Error';
+                currentInput = 'Error';
+                updateDisplay();
             }
+        }
+
+        function calculateAbsolute() {
+            try {
+                currentInput = eval(`Math.abs(${currentInput})`).toString();
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                updateDisplay();
+            }
+        }
+
+        function calculateFactorial() {
+            try {
+                const num = parseInt(currentInput);
+                if (num < 0) {
+                    throw new Error('Cannot calculate factorial of a negative number');
+                }
+
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+
+                currentInput = result.toString();
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                updateDisplay();
+            }
+        }
+
+        function toggleSign() {
+            try {
+                currentInput = eval(`-(${currentInput})`).toString();
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                updateDisplay();
+            }
+        }
+
+        function calculateResult() {
+            try {
+                currentInput = eval(currentInput).toString();
+                updateDisplay();
+            } catch (error) {
+                currentInput = 'Error';
+                updateDisplay();
+            }
+        }
+
+        let memoryValue = 0;
+
+        function memoryRecall() {
+            currentInput = memoryValue.toString();
+            updateDisplay();
+        }
+
+        function memoryAdd() {
+            memoryValue += eval(currentInput);
+            clearDisplay();
+        }
+
+        function memorySubtract() {
+            memoryValue -= eval(currentInput);
+            clearDisplay();
+        }
+
+        function memoryStore() {
+            memoryValue = eval(currentInput);
+            clearDisplay();
+        }
+
+        function memoryMultiply() {
+            memoryValue *= eval(currentInput);
+            clearDisplay();
         }
     </script>
 </body>
